@@ -4,10 +4,10 @@ public struct PropertyList {
     public typealias Format = PropertyListSerialization.PropertyListFormat
 
     /// The contents of the property list.
-    var contents: Contents
+    public var contents: Contents
 
     /// The format of the property list.
-    var format: Format
+    public var format: Format
 
     public init(contents: Contents = .dictionary([:]), format: Format = .xml) {
         self.contents = contents
@@ -39,7 +39,7 @@ public extension PropertyList {
         }
     }
 
-    func write(to fileURL: URL, options: Data.WritingOptions = []) throws {
+    func serialize() throws -> Data {
         do {
             // Throw an error if we try to write openStep since it is not supported by PropertyListSerialization
             guard format != .openStep else {
@@ -52,10 +52,23 @@ public extension PropertyList {
             }
 
             // Serialize the contents into plist data for the given format
-            let data = try PropertyListSerialization.data(fromPropertyList: contents.value, format: format, options: .min)
+            return try PropertyListSerialization.data(fromPropertyList: contents.value, format: format, options: .min)
+
+        // Error handling
+        } catch let error as PropertyListError {
+            throw error
+        } catch let error {
+            throw PropertyListError(code: .unknown, underlyingError: error)
+        }
+    }
+
+    func write(to fileURL: URL, options: Data.WritingOptions = []) throws {
+        do {
+            // Serialize the contents into plist data for the given format
+            let data = try serialize()
 
             // Write the data out to file
-            try data.write(to: fileURL, options: options)
+            return try data.write(to: fileURL, options: options)
 
         // Error handling
         } catch let error as PropertyListError {

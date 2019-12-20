@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "PlistPal",
+    platforms: [
+        .macOS(.v10_11)
+    ],
     products: [
         .executable(
             name: "PlistPal",
@@ -16,13 +19,13 @@ let package = Package(
         ),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-package-manager.git", .exact("0.5.0")),
     ],
     targets: [
         .target(
             name: "PlistPal",
             dependencies: [
+                "SPMUtility",
                 "PlistPalCore"
             ]
         ),
