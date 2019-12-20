@@ -2,7 +2,7 @@ enum Format: String {
     case xml, binary
 }
 
-import SPMUtility
+import TSCUtility
 
 extension Format: StringEnumArgument {
     static let completion: ShellCompletion = ShellCompletion.none

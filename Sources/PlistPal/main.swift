@@ -1,4 +1,4 @@
-import SPMUtility
+import TSCUtility
 
 let parser = ArgumentParser(
     commandName: "plistpal",

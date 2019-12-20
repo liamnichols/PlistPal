@@ -19,13 +19,13 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-package-manager.git", .exact("0.5.0")),
+        .package(url: "https://github.com/apple/swift-tools-support-core.git", .exact("0.0.1")),
     ],
     targets: [
         .target(
             name: "PlistPal",
             dependencies: [
-                "SPMUtility",
+                "SwiftToolsSupport-auto",
                 "PlistPalCore"
             ]
         ),
