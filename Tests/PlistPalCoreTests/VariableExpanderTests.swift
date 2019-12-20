@@ -50,4 +50,10 @@ final class VariableExpanderTests: XCTestCase {
             "https://api.example.com/test?api_key=0469c53fb48a73b12a0e75e22fc52e5e38fe7849b8b5ac6b2a403eea0d27eb2f"
         )
     }
+
+    // MARK: - Linux Support
+
+    static var allTests = [
+        ("testExpand", testExpand)
+    ]
 }

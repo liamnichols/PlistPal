@@ -67,4 +67,13 @@ final class ContentsTests: XCTestCase {
             "three": 3
         ])
     }
+
+    // MARK: - Linux Support
+
+    static var allTests = [
+        ("testExpandingVariables_topLevelArray", testExpandingVariables_topLevelArray),
+        ("testExpandingVariables_topLevelDictionary", testExpandingVariables_topLevelDictionary),
+        ("testExpandingVariables_nestedContainer", testExpandingVariables_nestedContainer),
+        ("testExpandingVariables_doesNotTouchNonStrings", testExpandingVariables_doesNotTouchNonStrings),
+    ]
 }
