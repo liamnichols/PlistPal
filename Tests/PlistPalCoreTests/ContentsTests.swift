@@ -1,13 +1,17 @@
 import XCTest
 @testable import PlistPalCore
 
+struct MockVariableExpander: VariableExpanderProtocol {
+    func expandVariables(in string: String) -> String {
+        "EXPANDED"
+    }
+}
+
 final class ContentsTests: XCTestCase {
     func testExpandingVariables_topLevelArray() {
-        let contents = Contents.array(["1", "2", "3", "${FOUR}"])
-
-        let expanded = contents.expandingVariables(using: ["FOUR": "4"])
-
-        XCTAssertEqual(expanded.value as? [String], ["1", "2", "3", "4"])
+        let contents = Contents.array(["1", "2", "3", "4"])
+        let expanded = contents.expandingVariables(using: MockVariableExpander())
+        XCTAssertEqual(expanded.value as? [String], ["EXPANDED", "EXPANDED", "EXPANDED", "EXPANDED"])
     }
 
     func testExpandingVariables_topLevelDictionary() {
@@ -15,16 +19,16 @@ final class ContentsTests: XCTestCase {
             "1": "one",
             "2": "two",
             "3": "three",
-            "4": "${FOUR}"
+            "4": "four"
         ])
 
-        let expanded = contents.expandingVariables(using: ["FOUR": "four"])
+        let expanded = contents.expandingVariables(using: MockVariableExpander())
 
         XCTAssertEqual(expanded.value as? [String: String], [
-            "1": "one",
-            "2": "two",
-            "3": "three",
-            "4": "four"
+            "1": "EXPANDED",
+            "2": "EXPANDED",
+            "3": "EXPANDED",
+            "4": "EXPANDED"
         ])
     }
 
@@ -32,64 +36,35 @@ final class ContentsTests: XCTestCase {
         let contents = Contents.dictionary([
             "array": [
                 [
-                    "key": "${VALUE}"
-                ]
-            ]
-        ])
-
-        let expanded = contents.expandingVariables(using: ["VALUE": "value"])
-
-        XCTAssertEqual(expanded.value as? [String: [[String: String]]], [
-            "array": [
-                [
                     "key": "value"
                 ]
             ]
         ])
-    }
 
-    func testExpandingVariables_multiple() {
-        let contents = Contents.dictionary([
-            "environment": "${ENVIRONMENT}",
-            "hostname": "${HOST_ONE}",
-            "fallback_hostname": "${HOST_TWO}"
-        ])
+        let expanded = contents.expandingVariables(using: MockVariableExpander())
 
-        let expanded = contents.expandingVariables(using: [
-            "ENVIRONMENT": "production",
-            "HOST_ONE": "api.example.com",
-            "HOST_TWO": "fallbackapi.example.com"
-        ])
-
-        XCTAssertEqual(expanded.value as? [String: String], [
-            "environment": "production",
-            "hostname": "api.example.com",
-            "fallback_hostname": "fallbackapi.example.com"
+        XCTAssertEqual(expanded.value as? [String: [[String: String]]], [
+            "array": [
+                [
+                    "key": "EXPANDED"
+                ]
+            ]
         ])
     }
 
-    func testExpandingVariables_multipleInSameString() {
+    func testExpandingVariables_doesNotTouchNonStrings() {
         let contents = Contents.dictionary([
-            "api_hostname": "${API_SUBDOMAIN}.${PRIMARY_HOSTNAME}"
+            "one": 1,
+            "two": 2,
+            "three": 3
         ])
 
-        let expanded = contents.expandingVariables(using: [
-            "API_SUBDOMAIN": "api",
-            "PRIMARY_HOSTNAME": "example.com"
+        let expanded = contents.expandingVariables(using: MockVariableExpander())
+
+        XCTAssertEqual(expanded.value as? [String: Int], [
+            "one": 1,
+            "two": 2,
+            "three": 3
         ])
-
-        XCTAssertEqual(expanded.value as? [String: String], [
-            "api_hostname": "api.example.com",
-        ])
-    }
-
-    func testExpandingVariables_missingValue() {
-        let contents = Contents.dictionary([
-            "APIToken": "${API_TOKEN}"
-        ])
-
-        let expanded = contents.expandingVariables(using: [:])
-
-        XCTAssertEqual(expanded.value as? [String: String], ["APIToken": ""])
     }
 }
