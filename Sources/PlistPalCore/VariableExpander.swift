@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Liam Nichols on 20/12/2019.
-//
-
 import Foundation
 
 protocol VariableExpanderProtocol {
