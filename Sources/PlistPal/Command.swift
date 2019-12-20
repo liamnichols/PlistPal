@@ -27,6 +27,11 @@ struct Command {
             break // don't change the format
         }
 
+        // Expand variables if specified
+        if isVariableExpansionEnabled {
+            propertyList.contents.expandVariables(using: ProcessInfo.processInfo.environment)
+        }
+
         // If an output path wasn't specified, just write to stdout
         guard let outputPath = outputPath else {
             stdout.write(try propertyList.serialize())
