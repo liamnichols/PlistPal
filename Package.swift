@@ -10,7 +10,7 @@ let package = Package(
     ],
     products: [
         .executable(
-            name: "PlistPal",
+            name: "plistpal",
             targets: ["PlistPal"]
         ),
         .library(
