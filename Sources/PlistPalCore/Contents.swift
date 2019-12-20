@@ -32,9 +32,10 @@ public extension Contents {
     }
 
     func expandingVariables(using values: [String: String]) -> Contents {
-        // Create the expander with the input variables
-        let expander = VariableExpander(values: values)
+        self.expandingVariables(using: VariableExpander(values: values))
+    }
 
+    internal func expandingVariables(using expander: VariableExpanderProtocol) -> Contents {
         // Based on the contents type, map the values through the expander
         switch self {
         case .array(let array):
@@ -44,10 +45,10 @@ public extension Contents {
         }
     }
 
-    private func expandVariables(in object: Any, using expander: VariableExpander) -> Any {
+    private func expandVariables(in object: Any, using expander: VariableExpanderProtocol) -> Any {
         switch object {
         case let string as String:
-            return expander.expand(string)
+            return expander.expandVariables(in: string)
 
         case let array as [Any]:
             return array.map { expandVariables(in: $0, using: expander) }

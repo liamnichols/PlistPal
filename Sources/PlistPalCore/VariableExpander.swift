@@ -7,7 +7,11 @@
 
 import Foundation
 
-private class _VariableExpander: NSRegularExpression {
+protocol VariableExpanderProtocol {
+    func expandVariables(in string: String) -> String
+}
+
+class VariableExpander: NSRegularExpression, VariableExpanderProtocol {
     let values: [String: String]
 
     init(values: [String: String]) {
@@ -38,7 +42,7 @@ private class _VariableExpander: NSRegularExpression {
         return value
     }
 
-    func stringByReplacingMatches(in string: String) -> String {
+    func expandVariables(in string: String) -> String {
         super.stringByReplacingMatches(
             in: string,
             range: NSRange(string.startIndex ..< string.endIndex, in: string),
@@ -46,7 +50,7 @@ private class _VariableExpander: NSRegularExpression {
         )
     }
 
-    @available(*, unavailable)
+    @available(*, unavailable, message: "Use expandVariables(in string:) instead")
     override func stringByReplacingMatches(
         in string: String,
         options: NSRegularExpression.MatchingOptions = [],
@@ -54,20 +58,5 @@ private class _VariableExpander: NSRegularExpression {
         withTemplate templ: String
     ) -> String {
         fatalError("Not Implemented")
-    }
-}
-
-public class VariableExpander {
-    /// The values passed on init to be used when expanding variables
-    public var values: [String: String] { expander.values }
-
-    private let expander: _VariableExpander
-
-    init(values: [String: String]) {
-        self.expander = _VariableExpander(values: values)
-    }
-
-    func expand(_ string: String) -> String {
-        expander.stringByReplacingMatches(in: string)
     }
 }

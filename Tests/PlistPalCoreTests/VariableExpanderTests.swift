@@ -21,32 +21,32 @@ final class VariableExpanderTests: XCTestCase {
 
     func testExpand() {
         XCTAssertEqual(
-            expander.expand("Nothing to expand"),
+            expander.expandVariables(in: "Nothing to expand"),
             "Nothing to expand"
         )
 
         XCTAssertEqual(
-            expander.expand("${THE_ALPHABET}"),
+            expander.expandVariables(in: "${THE_ALPHABET}"),
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         )
 
         XCTAssertEqual(
-            expander.expand("${NON_EXISTENT_KEY}"),
+            expander.expandVariables(in: "${NON_EXISTENT_KEY}"),
             ""
         )
 
         XCTAssertEqual(
-            expander.expand("${EMPTY}"),
+            expander.expandVariables(in: "${EMPTY}"),
             ""
         )
 
         XCTAssertEqual(
-            expander.expand("${SCHEME}://${HOSTNAME}/${API_PATH}/some/endpoint"),
+            expander.expandVariables(in: "${SCHEME}://${HOSTNAME}/${API_PATH}/some/endpoint"),
             "https://api.example.com/v2/some/endpoint"
         )
 
         XCTAssertEqual(
-            expander.expand("https://api.example.com/test?api_key=${API_KEY}"),
+            expander.expandVariables(in: "https://api.example.com/test?api_key=${API_KEY}"),
             "https://api.example.com/test?api_key=0469c53fb48a73b12a0e75e22fc52e5e38fe7849b8b5ac6b2a403eea0d27eb2f"
         )
     }
