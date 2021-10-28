@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  checks:
+    name: Checks (Xcode ${{ matrix.xcode_version }})
+    runs-on: macos-11
+
+    strategy:
+      matrix:
+        xcode_version: ['12.5.1', '13.1']
+
+    env:
+      DEVELOPER_DIR: '/Applications/Xcode_${{ matrix.xcode_version }}.app/Contents/Developer'
+
+    steps:
+    # Checkout the Git repo
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+
+    # Check Swift Version
+    - name: Check Swift Version
+      run: swift --version
+
+    # Build
+    - name: Build
+      run: swift build -v
+
+    # Test
+    - name: Run Tests
+      run: swift test -v
