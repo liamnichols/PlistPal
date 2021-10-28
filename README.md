@@ -4,16 +4,22 @@
 
 ```
 $ plistpal -h                                                                       
-OVERVIEW: plistpal can be used to convert the format of a plist file or expand variables within the file in a similar way to how Info.plist files are expanded during the build process.
+OVERVIEW: plistpal can be used to convert the format of a plist file or expand
+variables within the file in a similar way to how Info.plist files are expanded
+during the build process.
 
-USAGE: plistpal --input <filepath> [--output <filepath>] [--format {xml|binary}] [--expandVariables]
+USAGE: plistpal --input <input> [--output <output>] [--format <format>] [--expand-variables]
 
 OPTIONS:
-  --expand-variables, -e   When present, tells plistpal to substitute variable placeholders (i.e '${SOME_VAR}') in the plist with environment variables.
-  --format, -f             The format to use when writing the plist. If not specified, the original input format will be used.
-  --input, -i              The path to plist file used for reading
-  --output, -o             Optional path used for writing the output plist. If not specified, output will be written to stdout.
-  --help                   Display available options
+  -i, --input <input>     The path to plist file used for reading
+  -o, --output <output>   Optional path used for writing the output plist. If
+                          not specified, output will be written to stdout.
+  -f, --format <format>   The format to use when writing the plist. If not
+                          specified, the original input format will be used.
+  -e, --expand-variables  When present, tells plistpal to substitute variable
+                          placeholders (i.e '${SOME_VAR}') in the plist with
+                          environment variables.
+  -h, --help              Show help information.
 ```
 
 ## Use Case
