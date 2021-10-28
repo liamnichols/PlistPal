@@ -1,16 +1,44 @@
+import ArgumentParser
 import Foundation
 import PlistPalCore
 
-struct Command {
-    let inputPath: String
-    let outputPath: String?
-    let format: Format?
-    let isVariableExpansionEnabled: Bool
+@main
+struct Command: ParsableCommand {
+    static var configuration = CommandConfiguration(
+        commandName: "plistpal",
+        abstract: "plistpal can be used to convert the format of a plist file or expand variables within the file in a similar way to how Info.plist files are expanded during the build process."
+    )
 
-    let fileManager = FileManager.default
-    let stdout = FileHandle.standardOutput
+    @Option(
+        name: [.customLong("input"), .short],
+        help: "The path to plist file used for reading",
+        completion: .file()
+    )
+    var inputPath: String
 
-    func run() throws {
+    @Option(
+        name: [.customLong("output"), .short],
+        help: "Optional path used for writing the output plist. If not specified, output will be written to stdout.",
+        completion: .file()
+    )
+    var outputPath: String?
+
+    @Option(
+        name: .shortAndLong,
+        help: "The format to use when writing the plist. If not specified, the original input format will be used.",
+        completion: .list(Format.allCases.map(\.rawValue))
+    )
+    var format: Format?
+
+    @Flag(
+        name: [.customLong("expandVariables"), .customShort("e")],
+        help: "When present, tells plistpal to substitute variable placeholders (i.e '${SOME_VAR}') in the plist with environment variables."
+    )
+    var isVariableExpansionEnabled: Bool = false
+
+    mutating func run() throws {
+        let fileManager = FileManager.default
+        let stdout = FileHandle.standardOutput
         let currentDirectoryURL = URL(fileURLWithPath: fileManager.currentDirectoryPath, isDirectory: true)
         let inputFileURL = URL(fileURLWithPath: inputPath, isDirectory: false, relativeTo: currentDirectoryURL)
 

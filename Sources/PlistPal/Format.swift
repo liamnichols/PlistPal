@@ -2,8 +2,6 @@ enum Format: String {
     case xml, binary
 }
 
-import TSCUtility
+import ArgumentParser
 
-extension Format: StringEnumArgument {
-    static let completion: ShellCompletion = ShellCompletion.none
-}
+extension Format: CaseIterable,  ExpressibleByArgument {}
