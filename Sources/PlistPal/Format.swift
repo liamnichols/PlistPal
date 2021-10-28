@@ -4,4 +4,4 @@ enum Format: String {
 
 import ArgumentParser
 
-extension Format: CaseIterable,  ExpressibleByArgument {}
+extension Format: CaseIterable, ExpressibleByArgument {}

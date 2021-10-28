@@ -16,7 +16,7 @@ let package = Package(
         .library(
             name: "PlistPalCore",
             targets: ["PlistPalCore"]
-        ),
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.1")

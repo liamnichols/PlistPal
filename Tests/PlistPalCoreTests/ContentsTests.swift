@@ -74,6 +74,6 @@ final class ContentsTests: XCTestCase {
         ("testExpandingVariables_topLevelArray", testExpandingVariables_topLevelArray),
         ("testExpandingVariables_topLevelDictionary", testExpandingVariables_topLevelDictionary),
         ("testExpandingVariables_nestedContainer", testExpandingVariables_nestedContainer),
-        ("testExpandingVariables_doesNotTouchNonStrings", testExpandingVariables_doesNotTouchNonStrings),
+        ("testExpandingVariables_doesNotTouchNonStrings", testExpandingVariables_doesNotTouchNonStrings)
     ]
 }
