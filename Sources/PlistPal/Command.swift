@@ -4,6 +4,7 @@ import PlistPalCore
 
 @main
 struct Command: ParsableCommand {
+    // swiftlint:disable line_length
     static var configuration = CommandConfiguration(
         commandName: "plistpal",
         abstract: "plistpal can be used to convert the format of a plist file or expand variables within the file in a similar way to how Info.plist files are expanded during the build process."
@@ -35,6 +36,7 @@ struct Command: ParsableCommand {
         help: "When present, tells plistpal to substitute variable placeholders (i.e '${SOME_VAR}') in the plist with environment variables."
     )
     var isVariableExpansionEnabled: Bool = false
+    // swiftlint:enable line_length
 
     mutating func run() throws {
         let fileManager = FileManager.default

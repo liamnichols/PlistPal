@@ -9,6 +9,8 @@ class VariableExpander: NSRegularExpression, VariableExpanderProtocol {
 
     init(values: [String: String]) {
         self.values = values
+
+        // swiftlint:disable:next force_try
         try! super.init(pattern: #"\$\{([^\}]+)\}"#, options: [])
     }
 

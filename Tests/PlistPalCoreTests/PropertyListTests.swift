@@ -195,6 +195,6 @@ final class PropertyListTests: XCTestCase {
         ("testInitWithFileURL_OpenStep", testInitWithFileURL_OpenStep),
         ("testInitWithFileURL_Binary", testInitWithFileURL_Binary),
         ("testInitWithFileURL_NoFile", testInitWithFileURL_NoFile),
-        ("testInitWithFileURL_InvalidFormat", testInitWithFileURL_InvalidFormat),
+        ("testInitWithFileURL_InvalidFormat", testInitWithFileURL_InvalidFormat)
     ]
 }
