@@ -31,7 +31,7 @@ struct Command: ParsableCommand {
     var format: Format?
 
     @Flag(
-        name: [.customLong("expandVariables"), .customShort("e")],
+        name: [.customLong("expand-variables"), .customShort("e")],
         help: "When present, tells plistpal to substitute variable placeholders (i.e '${SOME_VAR}') in the plist with environment variables."
     )
     var isVariableExpansionEnabled: Bool = false
