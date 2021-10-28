@@ -32,6 +32,6 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v2
     - name: Lint Files
-      uses: norio-nomura/action-swiftlint@3
+      uses: norio-nomura/action-swiftlint@3.2.1
       with:
         args: --strict
