@@ -7,8 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  checks:
-    name: Checks (Xcode ${{ matrix.xcode_version }})
+  build_and_test:
+    name: Build & Test (Xcode ${{ matrix.xcode_version }})
     runs-on: macos-11
 
     strategy:
